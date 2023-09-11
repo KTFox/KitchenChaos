@@ -15,7 +15,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float rotateSpeed = 7f;
     [SerializeField] private GameInput gameInput;
-    [SerializeField] private LayerMask counterMask;
+    [SerializeField] private LayerMask counterMask; // There are many kinds of counter such as "ClearCounter",...
 
     private bool isWalking;
     private Vector3 lastMoveDir;
@@ -80,26 +80,32 @@ public class Player : MonoBehaviour {
                 }
             }
         }
+
+        //Move player
         if (canMove) {
             transform.position += moveDir.normalized * moveDistance;
         }
 
+        // This field is used for player animation
         isWalking = moveDir != Vector3.zero;
 
+        // Rotate player
         transform.forward = Vector3.Slerp(transform.forward, moveDir, rotateSpeed * Time.deltaTime);
     }
 
     private void HandleInteractions() {
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
-
         float interactDistance = 1f;
 
+        // Remain the last moving direction when player isn't moving
         if (moveDir != Vector3.zero) {
             lastMoveDir = moveDir;
         }
 
+        // Check if player interact with counter
         if (Physics.Raycast(transform.position, lastMoveDir, out RaycastHit raycastHit, interactDistance, counterMask)) {
+            // Check if player interact with "Clear Counter"
             if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter)) {
                 if (clearCounter != selectedCounter) {
                     SetSelectedCounter(clearCounter);

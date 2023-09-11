@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class SelectedCounterVisual : MonoBehaviour {
 
-    [SerializeField] private ClearCounter clearCounter;
-    [SerializeField] private GameObject visualCounter;
+    [SerializeField] private ClearCounter clearCounter; // The counter that this script is attached
+    [SerializeField] private GameObject visualCounter; 
 
 
     private void Start() {
