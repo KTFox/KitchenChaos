@@ -13,7 +13,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent {
     }
 
     [SerializeField] private float moveSpeed = 7f;
-    [SerializeField] private float rotateSpeed = 7f;
+    [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask counterMask; // There are many kinds of counter such as "ClearCounter",...
     [SerializeField] Transform kitchenObjectHoldPoint;
@@ -34,11 +34,18 @@ public class Player : MonoBehaviour, IKitchenObjectParent {
 
     private void Start() {
         gameInput.OnInteractAction += GameInput_OnInteractAction;
+        gameInput.OnInteractActionAlternateAction += GameInput_OnInteractActionAlternateAction;
     }
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e) {
         if (selectedCounter != null) {
             selectedCounter.Interact(this);
+        }
+    }
+
+    private void GameInput_OnInteractActionAlternateAction(object sender, EventArgs e) {
+        if (selectedCounter != null) {
+            selectedCounter.InteractAlternate(this);
         }
     }
 
@@ -57,12 +64,13 @@ public class Player : MonoBehaviour, IKitchenObjectParent {
 
         bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, moveDistance);
 
+        // Find direction that player can move to
         if (!canMove) {
             // Cannot move towards moveDir
 
             // Attemp only X movement
             Vector3 moveDirX = new Vector3(moveDir.x, 0, 0);
-            canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
+            canMove = moveDirX.x != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
 
             if (canMove) {
                 // Can move only on the X
@@ -72,7 +80,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent {
 
                 // Attemp only Z movement
                 Vector3 moveDirZ = new Vector3(0, 0, moveDir.z);
-                canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
+                canMove = moveDirZ.z != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
 
                 if (canMove) {
                     // Can move only on the Z
@@ -83,7 +91,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent {
             }
         }
 
-        //Move player
+        //Move player to moveDir direction
         if (canMove) {
             transform.position += moveDir.normalized * moveDistance;
         }
