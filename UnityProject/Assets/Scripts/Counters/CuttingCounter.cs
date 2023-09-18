@@ -78,9 +78,7 @@ public class CuttingCounter : BaseCounter, IHasProgress {
                 GetKitchenObject().DestroySelf();
 
                 KitchenObject.SpawnKitchenObjectSO(outputKitchenObjectSO, this);
-            } else {
-                Debug.Log(cuttingProgress);
-            }
+            } 
         }
     }
 
