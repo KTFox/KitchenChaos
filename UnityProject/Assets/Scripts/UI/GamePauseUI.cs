@@ -18,7 +18,7 @@ public class GamePauseUI : MonoBehaviour {
             KitchenGameManager.Instance.TogglePauseGame();
         });
         optionsButton.onClick.AddListener(() => {
-            OptionsUI.Instance.Show();
+            OptionsUI.Instance.ShowOptionsUI();
         });
     }
 
