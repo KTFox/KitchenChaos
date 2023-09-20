@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class KitchenGameManager : MonoBehaviour {
 
-    public static GameManager Instance { get; private set; }
+    public static KitchenGameManager Instance { get; private set; }
 
     public event EventHandler OnStateChanged;
+    public event EventHandler OnGamePaused;
+    public event EventHandler OnGameUnpaused;
 
     private enum State {
         WaitingToStart,
@@ -21,11 +23,20 @@ public class GameManager : MonoBehaviour {
     private float timeCountDownToStart = 3f;
     private float timeGamePlaying;
     private float timeGamePlayingMax = 20f;
+    private bool isGamePaused;
 
     private void Awake() {
         Instance = this;
 
         state = State.WaitingToStart;
+    }
+
+    private void Start() {
+        GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
+    }
+
+    private void GameInput_OnPauseAction(object sender, EventArgs e) {
+        TogglePauseGame();
     }
 
     private void Update() {
@@ -60,8 +71,6 @@ public class GameManager : MonoBehaviour {
             case State.GameOver:
                 break;
         }
-
-        Debug.Log(state);
     }
 
     public bool IsGamePlaying() {
@@ -82,6 +91,22 @@ public class GameManager : MonoBehaviour {
 
     public float GetTimeGamePlayingNormalized() {
         return 1 - timeGamePlaying / timeGamePlayingMax;
+    }
+
+    public void TogglePauseGame() {
+        if (!isGamePaused) {
+            Time.timeScale = 0f;
+
+            isGamePaused = true;
+
+            OnGamePaused?.Invoke(this, EventArgs.Empty);
+        } else {
+            Time.timeScale = 1f;
+
+            isGamePaused = false;
+
+            OnGameUnpaused?.Invoke(this, EventArgs.Empty);
+        }
     }
 
 }

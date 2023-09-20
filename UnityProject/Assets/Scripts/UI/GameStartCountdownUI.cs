@@ -8,13 +8,13 @@ public class GameStartCountdownUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI countdownText;
 
     private void Start() {
-        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
+        KitchenGameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
 
         Hide();
     }
 
     private void GameManager_OnStateChanged(object sender, System.EventArgs e) {
-        if (GameManager.Instance.IsGameStartCountdownActive()) {
+        if (KitchenGameManager.Instance.IsGameStartCountdownActive()) {
             Show();
         } else {
             Hide();
@@ -22,7 +22,7 @@ public class GameStartCountdownUI : MonoBehaviour {
     }
 
     private void Update() {
-        countdownText.text = Mathf.Ceil(GameManager.Instance.GetTimeCountDownToStart()).ToString();
+        countdownText.text = Mathf.Ceil(KitchenGameManager.Instance.GetTimeCountDownToStart()).ToString();
     }
 
     private void Hide() {
