@@ -68,6 +68,14 @@ public class SoundManager : MonoBehaviour {
         AudioSource.PlayClipAtPoint(audioClipRefsSO.footstep[Random.Range(0, audioClipRefsSO.footstep.Length)], position, volumeMultiplier * volume);
     }
 
+    public void PlayCountdownSound() {
+        PlaySound(audioClipRefsSO.warning[Random.Range(0, audioClipRefsSO.warning.Length)], Vector3.zero);
+    }
+
+    public void PlayWarningSound(Vector3 position) {
+        PlaySound(audioClipRefsSO.warning[Random.Range(0, audioClipRefsSO.warning.Length)], position);
+    }
+
     public void ChangeVolume() {
         volume += 0.1f;
 

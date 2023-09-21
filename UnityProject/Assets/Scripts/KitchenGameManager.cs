@@ -19,7 +19,6 @@ public class KitchenGameManager : MonoBehaviour {
     }
 
     private State state;
-    private float timeWaitingToStart = 1f;
     private float timeCountDownToStart = 3f;
     private float timeGamePlaying;
     private float timeGamePlayingMax = 20f;
@@ -33,6 +32,15 @@ public class KitchenGameManager : MonoBehaviour {
 
     private void Start() {
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
+        GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+    }
+
+    private void GameInput_OnInteractAction(object sender, EventArgs e) {
+        if (state == State.WaitingToStart) {
+            state = State.CountDownToStart;
+
+            OnStateChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     private void GameInput_OnPauseAction(object sender, EventArgs e) {
@@ -40,15 +48,8 @@ public class KitchenGameManager : MonoBehaviour {
     }
 
     private void Update() {
-        timeWaitingToStart -= Time.deltaTime;
-
         switch (state) {
             case State.WaitingToStart:
-                if (timeWaitingToStart <= 0f) {
-                    state = State.CountDownToStart;
-
-                    OnStateChanged?.Invoke(this, EventArgs.Empty);
-                }
                 break;
             case State.CountDownToStart:
                 timeCountDownToStart -= Time.deltaTime;

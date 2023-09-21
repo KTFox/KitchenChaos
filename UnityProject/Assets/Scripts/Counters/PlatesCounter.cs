@@ -21,11 +21,11 @@ public class PlatesCounter : BaseCounter {
         if (spawnPlateTimer > spawnPlateTimerMax) {
             spawnPlateTimer = 0;
 
-            if (platesSpawnedAmount < platesSpawnedAmountMax) {
+            if (KitchenGameManager.Instance.IsGamePlaying() && platesSpawnedAmount < platesSpawnedAmountMax) {
                 platesSpawnedAmount++;
 
                 OnPlateSpawned?.Invoke(this, EventArgs.Empty);
-            } 
+            }
         }
     }
 
@@ -40,7 +40,7 @@ public class PlatesCounter : BaseCounter {
 
                 KitchenObject.SpawnKitchenObjectSO(plateKitchenObjectSO, player);
 
-                OnPlateRemoved?.Invoke(this, EventArgs.Empty );
+                OnPlateRemoved?.Invoke(this, EventArgs.Empty);
             }
         }
     }
