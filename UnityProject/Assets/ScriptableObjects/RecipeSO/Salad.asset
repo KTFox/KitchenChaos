@@ -15,4 +15,5 @@ MonoBehaviour:
   kitchenObjectSOList:
   - {fileID: 11400000, guid: dbcbfa38ec25af84c8b299aeadd1149f, type: 2}
   - {fileID: 11400000, guid: 3ad13a1f022b23341a066a3dfe14e5d6, type: 2}
+  scores: 50
   recipeName: Salad

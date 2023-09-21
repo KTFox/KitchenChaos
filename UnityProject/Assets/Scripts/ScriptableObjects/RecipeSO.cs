@@ -6,6 +6,7 @@ using UnityEngine;
 public class RecipeSO : ScriptableObject {
 
     public List<KitchenObjectSO> kitchenObjectSOList;
+    public int scores;
     public string recipeName;
 
 }

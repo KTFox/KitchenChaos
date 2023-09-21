@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour {
 
+    public const string HIGHEST_SCORES = "HighestScores";
+
     public event EventHandler OnRecipeSpawned;
     public event EventHandler OnRecipeCompleted;
     public event EventHandler OnRecipeSuccess;
@@ -18,7 +20,7 @@ public class DeliveryManager : MonoBehaviour {
     private float spawnRecipeSOTimer;
     private float spawnRecipeSOTimerMax = 4f;
     private int waitingRecipeMax = 4;
-    private int successfulRecipesAmount;
+    private int scores;
 
     private void Awake() {
         Instance = this;
@@ -26,7 +28,15 @@ public class DeliveryManager : MonoBehaviour {
         waitingRecipeSOList = new List<RecipeSO>();
     }
 
+    private void Start() {
+        scores = 0;
+    }
+
     private void Update() {
+        SpawnRecipeSO();
+    }
+
+    private void SpawnRecipeSO() {
         spawnRecipeSOTimer -= Time.deltaTime;
 
         if (spawnRecipeSOTimer <= 0) {
@@ -75,7 +85,8 @@ public class DeliveryManager : MonoBehaviour {
                 if (plateContentMatchesRecipe) {
                     // Player has delivered correct recipe!
 
-                    successfulRecipesAmount++;
+                    scores += waitingRecipeSO.scores;
+                    UpdateHighestScores();
 
                     waitingRecipeSOList.RemoveAt(i);
 
@@ -92,12 +103,19 @@ public class DeliveryManager : MonoBehaviour {
         OnRecipeFailed?.Invoke(this, EventArgs.Empty);
     }
 
+    private void UpdateHighestScores() {
+        if (scores > PlayerPrefs.GetInt(HIGHEST_SCORES)) {
+            PlayerPrefs.SetInt(HIGHEST_SCORES, scores);
+            PlayerPrefs.Save();
+        }
+    }
+
     public List<RecipeSO> GetRecipeSOWaitingList() {
         return waitingRecipeSOList;
     }
 
-    public int GetSuccessfulRecipesAmount() {
-        return successfulRecipesAmount;
+    public int GetScores() {
+        return scores;
     }
 
 }

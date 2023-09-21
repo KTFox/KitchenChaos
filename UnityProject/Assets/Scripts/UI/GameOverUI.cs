@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class GameOverUI : MonoBehaviour {
 
-    [SerializeField] private TextMeshProUGUI recipeDeliveredNumberText;
+    [SerializeField] private TextMeshProUGUI scoresNumberText;
+    [SerializeField] private TextMeshProUGUI highestScoresNumberText;
 
     private void Start() {
         KitchenGameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
@@ -17,7 +18,8 @@ public class GameOverUI : MonoBehaviour {
         if (KitchenGameManager.Instance.IsGameOver()) {
             Show();
 
-            recipeDeliveredNumberText.text = DeliveryManager.Instance.GetSuccessfulRecipesAmount().ToString();
+            scoresNumberText.text = DeliveryManager.Instance.GetScores().ToString();
+            highestScoresNumberText.text = PlayerPrefs.GetInt(DeliveryManager.HIGHEST_SCORES).ToString();
         } else {
             Hide();
         }
