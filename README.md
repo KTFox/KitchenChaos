@@ -8,3 +8,11 @@ Welcome, this is the repository for my 3D/Kitching game made with Unity.
 * Reference: ([CodeMonkey's tutorial](https://youtu.be/AmGSEH7QcDg?si=eIzBHeEnDlez2g11))
 
 ![Game Logo](/readmePictures/GameLogo.png)
+
+##
+
+> **Thank you for taking the time to review my portfolio. Your interest and attention mean a lot to me, and I truly appreciate the opportunity to share my work with you. If you have any questions or feedback, please don't hesitate to reach out.** ❤
+> 
+> *Contact info:*
+> - Email: khoitran7122002@gmail.com
+> - Linked: www.linkedin.com/in/khoi-tran-xuan-534920272
