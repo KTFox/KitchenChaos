@@ -9,6 +9,16 @@ Welcome, this is the repository for my 3D/Kitching game made with Unity.
 
 ![Game Logo](/readmePictures/GameLogo.png)
 
+![Tutorial](/readmePictures/Tutorial.png)
+
+![GamePlay1](/readmePictures/GamePlay1.png)
+
+![GamePlay2](/readmePictures/GamePlay_2.png)
+
+![Option](/readmePictures/Option.png)
+
+![GameOver](/readmePictures/GameOver.png)
+
 ##
 
 > **Thank you for taking the time to review my portfolio. Your interest and attention mean a lot to me, and I truly appreciate the opportunity to share my work with you. If you have any questions or feedback, please don't hesitate to reach out.** ❤
